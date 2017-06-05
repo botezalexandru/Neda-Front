@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges } from '@angular/core';
 
 import { SmartTablesService } from './smartTables.service';
 import { LocalDataSource } from 'ng2-smart-table';
 
+import { District } from '../../../..//district';
+import '../../../../rxjs-operators';
+
 import 'style-loader!./smartTables.scss';
+import {DistrictService} from '../../../../district.service';
 
 @Component({
   selector: 'smart-tables',
@@ -12,6 +16,12 @@ import 'style-loader!./smartTables.scss';
 export class SmartTables {
 
   query: string = '';
+
+
+  public districts: District[] = [];
+  public errorMessage: any = '';
+
+
 
   settings = {
     add: {
@@ -33,35 +43,93 @@ export class SmartTables {
         title: 'ID',
         type: 'number'
       },
-      firstName: {
-        title: 'First Name',
-        type: 'string'
-      },
-      lastName: {
-        title: 'Last Name',
-        type: 'string'
-      },
-      username: {
-        title: 'Username',
-        type: 'string'
-      },
-      email: {
-        title: 'E-mail',
-        type: 'string'
-      },
-      age: {
-        title: 'Age',
+      objectid: {
+        title: 'Object ID',
         type: 'number'
+      },
+      zone: {
+        title: 'zone',
+        type: 'string'
+      },
+      district: {
+        title: 'district',
+        type: 'string'
+      },
+      population: {
+        title: 'population',
+        type: 'number'
+      },
+      pga_value: {
+        title: 'pga_value',
+        type: 'string'
+      },
+      severity_class: {
+        title: 'severity_class',
+        type: 'string'
+      },
+      dist_id: {
+        title: 'dist_id',
+        type: 'number'
+      },
+      reg_code: {
+        title: 'reg_code',
+        type: 'string'
+      },
+      zone_code: {
+        title: 'zone_code',
+        type: 'string'
+      },
+      ocha_pcode: {
+        title: 'ocha_pcode',
+        type: 'string'
+      },
+      hlcit_code: {
+        title: 'hlcit_code',
+        type: 'string'
+      },
+
+      first_dist: {
+        title: 'first_dist',
+        type: 'string'
+      },
+
+      min_paramv: {
+        title: 'min_paramv',
+        type: 'string'
+      },
+
+      first_class: {
+        title: 'first_class',
+        type: 'string'
+      },
+
+      shape_leng: {
+        title: 'shape_leng',
+        type: 'string'
+      },
+
+      shape_area: {
+        title: 'shape_area',
+        type: 'string'
       }
+
     }
   };
 
+
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(protected service: SmartTablesService) {
-    this.service.getData().then((data) => {
-      this.source.load(data);
-    });
+  constructor(protected _postDistrictService: DistrictService,
+              protected service: SmartTablesService) {
+    this.getDistrict();
+    }
+
+  getDistrict() {
+    this._postDistrictService.getDistrincts()
+      .subscribe(
+        // districts => this.districts = districts,
+        districts => this.loadTableDistricts(districts),
+        error => this.errorMessage = <any>error);
   }
 
   onDeleteConfirm(event): void {
@@ -70,5 +138,9 @@ export class SmartTables {
     } else {
       event.confirm.reject();
     }
+  }
+
+  loadTableDistricts(districts): void {
+    this.source.load(districts.districts);
   }
 }

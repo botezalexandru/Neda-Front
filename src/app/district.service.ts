@@ -13,7 +13,6 @@ export class DistrictService {
   }
 
   getDistrincts(): Observable<District[]> {
-    debugger;
     return this.http.get('http://neda.local.com/districts')
       .map(this.extractData)
       .catch(this.handleError);
