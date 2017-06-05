@@ -1,9 +1,9 @@
-import { Component, OnChanges } from '@angular/core';
+import {Component, OnChanges} from '@angular/core';
 
-import { SmartTablesService } from './smartTables.service';
-import { LocalDataSource } from 'ng2-smart-table';
+import {SmartTablesService} from './smartTables.service';
+import {LocalDataSource} from 'ng2-smart-table';
 
-import { District } from '../../../..//district';
+import {District} from '../../../..//district';
 import '../../../../rxjs-operators';
 
 import 'style-loader!./smartTables.scss';
@@ -20,7 +20,6 @@ export class SmartTables {
 
   public districts: District[] = [];
   public errorMessage: any = '';
-
 
 
   settings = {
@@ -44,7 +43,7 @@ export class SmartTables {
         type: 'number'
       },
       objectid: {
-        title: 'Object ID',
+        title: 'ObjectId',
         type: 'number'
       },
       zone: {
@@ -60,23 +59,23 @@ export class SmartTables {
         type: 'number'
       },
       pga_value: {
-        title: 'pga_value',
+        title: 'Pga',
         type: 'string'
       },
       severity_class: {
-        title: 'severity_class',
+        title: 'Severity',
         type: 'string'
       },
       dist_id: {
-        title: 'dist_id',
+        title: 'District Id',
         type: 'number'
       },
       reg_code: {
-        title: 'reg_code',
+        title: 'Regional Code',
         type: 'string'
       },
       zone_code: {
-        title: 'zone_code',
+        title: 'Zone code',
         type: 'string'
       },
       ocha_pcode: {
@@ -84,35 +83,40 @@ export class SmartTables {
         type: 'string'
       },
       hlcit_code: {
-        title: 'hlcit_code',
+        title: 'Hlcit code',
         type: 'string'
       },
 
       first_dist: {
-        title: 'first_dist',
+        title: 'first dist',
         type: 'string'
       },
 
       min_paramv: {
-        title: 'min_paramv',
+        title: 'Min Param',
         type: 'string'
       },
 
       first_class: {
-        title: 'first_class',
+        title: 'First class',
         type: 'string'
       },
 
       shape_leng: {
-        title: 'shape_leng',
+        title: 'shape length',
         type: 'string'
       },
 
       shape_area: {
-        title: 'shape_area',
+        title: 'Shape area',
         type: 'string'
       }
-
+    },
+    editable: false,
+    actions: {
+      add: false,
+      edit: false,
+      delete: false
     }
   };
 
@@ -122,7 +126,7 @@ export class SmartTables {
   constructor(protected _postDistrictService: DistrictService,
               protected service: SmartTablesService) {
     this.getDistrict();
-    }
+  }
 
   getDistrict() {
     this._postDistrictService.getDistrincts()
