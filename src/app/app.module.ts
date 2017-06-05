@@ -19,6 +19,7 @@ import { AppState, InternalStateType } from './app.service';
 import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
+import { DistrictService } from './district.service';
 
 
 // Application wide providers
@@ -54,7 +55,8 @@ export type StoreType = {
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    DistrictService
   ]
 })
 

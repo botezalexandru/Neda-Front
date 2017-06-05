@@ -4,6 +4,9 @@ import { GlobalState } from './global.state';
 import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from './theme/services';
 import { BaThemeConfig } from './theme/theme.config';
 import { layoutPaths } from './theme/theme.constants';
+import { DistrictService } from './district.service';
+import { District } from './district';
+import './rxjs-operators';
 
 import 'style-loader!./app.scss';
 import 'style-loader!./theme/initial.scss';
@@ -29,11 +32,15 @@ export class App {
               private _imageLoader: BaImageLoaderService,
               private _spinner: BaThemeSpinner,
               private viewContainerRef: ViewContainerRef,
-              private themeConfig: BaThemeConfig) {
+              private themeConfig: BaThemeConfig,
+              private _postDistrictService: DistrictService) {
 
     themeConfig.config();
 
     this._loadImages();
+
+
+    this.getDistrict();
 
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
       this.isMenuCollapsed = isCollapsed;
@@ -50,6 +57,17 @@ export class App {
   private _loadImages(): void {
     // register some loaders
     BaThemePreloader.registerLoader(this._imageLoader.load(layoutPaths.images.root + 'sky-bg.jpg'));
+  }
+
+
+  public districts: District[] = [];
+  public errorMessage: any = '';
+
+  getDistrict() {
+    this._postDistrictService.getDistrincts()
+      .subscribe(
+        districts => this.districts = districts,
+        error => this.errorMessage = <any>error);
   }
 
 }

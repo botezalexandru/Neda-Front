@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Http, Response } from '@angular/http';
 
 export type InternalStateType = {
   [key: string]: any
@@ -8,7 +10,7 @@ export type InternalStateType = {
 export class AppState {
   _state: InternalStateType = {};
 
-  constructor() {
+  constructor(private http: Http) {
   }
 
   // already return a clone of the current state
@@ -20,7 +22,6 @@ export class AppState {
   set state(value) {
     throw new Error('do not mutate the `.state` directly');
   }
-
 
   get(prop?: any) {
     // use our state getter for the clone
@@ -38,4 +39,6 @@ export class AppState {
     // simple object clone
     return JSON.parse(JSON.stringify(object));
   }
+
+
 }
