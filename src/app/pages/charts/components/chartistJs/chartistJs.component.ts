@@ -16,7 +16,7 @@ export class ChartistJs {
   }
 
   ngOnInit() {
-    this.data = this._chartistJsService.getAll();
+    // this.data = this._chartistJsService.getDistrict();
   }
 
   getResponsive(padding, offset) {

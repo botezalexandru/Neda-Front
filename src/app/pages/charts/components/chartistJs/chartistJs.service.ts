@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
 
 import {BaThemeConfigProvider} from '../../../../theme';
+import {DistrictService} from "../../../../district.service";
+import {District} from "../../../../district";
+import '../../../../rxjs-operators';
 
 @Injectable()
 export class ChartistJsService {
@@ -170,7 +173,26 @@ export class ChartistJsService {
     }
   };
 
-  constructor(private _baConfig:BaThemeConfigProvider) {
+
+  public districts: District[] = [];
+  public errorMessage: any = '';
+
+  constructor(private _baConfig:BaThemeConfigProvider,
+              private _postDistrictService: DistrictService) {
+    this.getDistrict();
+  }
+
+  getDistrict() {
+    this._postDistrictService.getDistrincts()
+      .subscribe(
+        // districts => this.districts = districts,
+        districts => this.loadTableDistricts(districts),
+        error => this.errorMessage = <any>error);
+  }
+
+  loadTableDistricts(districts): void {
+    debugger;
+    // this.source.load(districts.districts);
   }
 
   public getAll() {
